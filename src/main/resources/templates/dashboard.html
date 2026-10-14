@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:960px">
+<div th:replace="~{fragments :: flash}"></div>
+<div id="live">
+<div class="d-flex justify-content-between align-items-end mb-3 flex-wrap">
+  <div><div class="text-muted"><span th:text="#{dash.welcome}">Welcome</span>, <b th:text="${me.name}"></b></div>
+  <div class="balance" th:text="${#numbers.formatDecimal(me.balance,1,'COMMA',2,'POINT')} + ' Rs.'"></div>
+  <div class="text-muted small"><span th:text="#{dash.balance}">Available balance</span> &middot; <span th:text="#{dash.account}">Account</span>: <span th:text="${me.accountNumber}"></span> (<span th:text="${me.accountType}"></span>)</div></div>
+  <a th:if="${unread > 0}" class="btn btn-outline-danger" th:href="@{/notifications}">🔔 <span th:text="${unread}"></span> new notification(s)</a>
+</div>
+<div class="row g-3">
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/deposit}" th:text="'💰 ' + #{nav.deposit}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/withdraw}" th:text="'🏧 ' + #{nav.withdraw}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/fastcash}" th:text="'⚡ ' + #{nav.fastcash}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/transfer}" th:text="'🔁 ' + #{nav.transfer}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/requests}">💸 Money requests</a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/balance}" th:text="'🔍 ' + #{nav.balance}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/ministatement}" th:text="'🧾 ' + #{nav.mini}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/statement}" th:text="'📄 ' + #{nav.statement}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/analytics}" th:text="'📊 ' + #{nav.analytics}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/goals}" th:text="'🎯 ' + #{nav.goals}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/loans}" th:text="'🏠 ' + #{nav.loans}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/scheduled}" th:text="'⏰ ' + #{nav.scheduled}"></a></div>
+  <div class="col-6 col-md-3"><a class="tile" th:href="@{/settings}" th:text="'⚙️ ' + #{nav.settings}"></a></div>
+</div>
+</div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

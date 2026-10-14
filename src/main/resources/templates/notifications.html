@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Notifications')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:860px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3>🔔 Notifications</h3>
+<div id="live">
+<div class="card border-danger mb-4">
+  <div class="card-header bg-danger text-white">🛡️ Security alerts <span class="badge bg-light text-danger" th:text="${#lists.size(sec)}">0</span></div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" th:each="n : ${sec}">
+      <div class="d-flex justify-content-between"><b><span th:text="${n.title}"></span> <span class="badge text-bg-danger" th:unless="${n.seen}">NEW</span></b>
+        <small class="text-muted" th:text="${#temporals.format(n.createdAt,'dd MMM yyyy HH:mm')}"></small></div>
+      <div style="white-space:pre-line" th:text="${n.message}"></div>
+    </li>
+    <li class="list-group-item text-muted" th:if="${#lists.isEmpty(sec)}">No security alerts</li>
+  </ul>
+</div>
+<div class="card">
+  <div class="card-header">Activity</div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" th:each="n : ${other}">
+      <div class="d-flex justify-content-between"><b><span th:text="${n.title}"></span> <span class="badge text-bg-primary" th:unless="${n.seen}">NEW</span></b>
+        <small class="text-muted" th:text="${#temporals.format(n.createdAt,'dd MMM yyyy HH:mm')}"></small></div>
+      <div style="white-space:pre-line" th:text="${n.message}"></div>
+    </li>
+    <li class="list-group-item text-muted" th:if="${#lists.isEmpty(other)}">Nothing yet</li>
+  </ul>
+</div>
+</div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

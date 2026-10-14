@@ -1,0 +1,4 @@
+body{background:#f4f6fa}
+.tile{display:block;padding:22px 10px;text-align:center;background:#fff;border-radius:12px;text-decoration:none;color:#212529;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08);transition:.15s}
+.tile:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15);color:#0d6efd}
+.balance{font-size:2.2rem;font-weight:700}

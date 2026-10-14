@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Beneficiaries')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:760px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3 th:text="#{nav.beneficiaries}">Beneficiaries</h3>
+<form th:action="@{/beneficiaries/lookup}" method="post" class="row g-2 mb-4">
+  <div class="col-md-9"><input class="form-control" name="accountNumber" placeholder="Beneficiary account number" inputmode="numeric" required></div>
+  <div class="col-md-3"><button class="btn btn-primary w-100">Verify →</button></div>
+</form>
+<table class="table bg-white"><tbody>
+  <tr th:each="b : ${bens}"><td th:text="${b.name}"></td><td th:text="${b.accountNumber}"></td>
+    <td class="text-end"><a class="btn btn-sm btn-success" th:href="@{/transfer(to=${b.accountNumber})}">Pay</a>
+      <form class="d-inline" th:action="@{/beneficiaries/{id}/delete(id=${b.id})}" method="post"><button class="btn btn-sm btn-outline-danger" th:text="#{common.delete}">Delete</button></form></td></tr>
+  <tr th:if="${#lists.isEmpty(bens)}"><td class="text-muted">No beneficiaries yet</td></tr>
+</tbody></table>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

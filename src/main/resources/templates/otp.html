@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Confirm OTP')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:480px">
+<div th:replace="~{fragments :: flash}"></div>
+<th:block th:replace="~{fragments :: countdown(${left})}"></th:block>
+<div class="card shadow-sm"><div class="card-body p-4">
+<h4>Confirm with OTP</h4>
+<p class="text-muted">Enter the 6-digit code emailed to you to confirm
+  <b th:text="${p.purpose == 'WITHDRAW'} ? 'withdrawal' : 'transfer'"></b> of <b th:text="'Rs. ' + ${p.amount}"></b>.</p>
+<form th:action="@{/otp}" method="post">
+  <input class="form-control form-control-lg mb-3 text-center" name="code" maxlength="6" inputmode="numeric" autocomplete="one-time-code" required autofocus>
+  <button class="btn btn-primary w-100">Confirm</button>
+</form>
+<form th:action="@{/otp/cancel}" method="post" class="mt-2"><button class="btn btn-outline-secondary w-100">← Back (cancel this transaction)</button></form>
+</div></div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

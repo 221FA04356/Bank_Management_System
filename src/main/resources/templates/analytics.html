@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Analytics')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:960px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3 th:text="'📊 ' + #{nav.analytics}">Analytics</h3>
+<div class="row g-3">
+  <div class="col-lg-8"><div class="card card-body shadow-sm"><h6>Credits vs debits, last 6 months</h6><canvas id="bar"></canvas></div></div>
+  <div class="col-lg-4"><div class="card card-body shadow-sm"><h6>By transaction type</h6><canvas id="pie"></canvas></div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script th:inline="javascript">
+const labels=/*[[${labels}]]*/[], credits=/*[[${credits}]]*/[], debits=/*[[${debits}]]*/[];
+const tl=/*[[${typeLabels}]]*/[], tv=/*[[${typeValues}]]*/[];
+new Chart(document.getElementById('bar'),{type:'bar',data:{labels:labels,datasets:[
+  {label:'Credits',data:credits,backgroundColor:'#198754'},{label:'Debits',data:debits,backgroundColor:'#dc3545'}]}});
+new Chart(document.getElementById('pie'),{type:'doughnut',data:{labels:tl,datasets:[{data:tv}]}});
+</script>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

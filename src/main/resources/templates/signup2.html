@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Sign up - Page 2')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:720px">
+<div th:replace="~{fragments :: flash}"></div>
+<h4>Page 2: Additional details</h4><div class="progress mb-3"><div class="progress-bar" style="width:66%"></div></div>
+<form th:action="@{/signup/2}" method="post" class="row g-3">
+  <div class="col-md-6"><label class="form-label">Religion</label><select class="form-select" name="religion"><option>Hindu</option><option>Muslim</option><option>Sikh</option><option>Christian</option><option>Other</option></select></div>
+  <div class="col-md-6"><label class="form-label">Category</label><select class="form-select" name="category"><option>General</option><option>OBC</option><option>SC</option><option>ST</option><option>Other</option></select></div>
+  <div class="col-md-6"><label class="form-label">Income</label><select class="form-select" name="income"><option>Null</option><option>&lt; 1,50,000</option><option>&lt; 2,50,000</option><option>&lt; 5,00,000</option><option>Upto 10,00,000</option><option>Above 10,00,000</option></select></div>
+  <div class="col-md-6"><label class="form-label">Education</label><select class="form-select" name="education"><option>Non-Graduate</option><option>Graduate</option><option>Post-Graduate</option><option>Doctorate</option><option>Other</option></select></div>
+  <div class="col-md-6"><label class="form-label">Occupation</label><select class="form-select" name="occupation"><option>Salaried</option><option>Self-Employed</option><option>Business</option><option>Student</option><option>Retired</option><option>Other</option></select></div>
+  <div class="col-md-6"><label class="form-label">PAN number</label><input class="form-control" name="pan" maxlength="10" placeholder="ABCDE1234F" required></div>
+  <div class="col-md-6"><label class="form-label">Aadhar number</label><input class="form-control" name="aadhar" maxlength="12" inputmode="numeric" required></div>
+  <div class="col-md-3"><label class="form-label">Senior citizen</label><select class="form-select" name="seniorCitizen"><option>No</option><option>Yes</option></select></div>
+  <div class="col-md-3"><label class="form-label">Existing account</label><select class="form-select" name="existingAccount"><option>No</option><option>Yes</option></select></div>
+  <div class="col-12 d-flex gap-2"><a class="btn btn-outline-secondary" th:href="@{/signup/1}">← Back</a><button class="btn btn-primary" th:text="#{common.next}">Next</button></div>
+</form>
+<script th:replace="~{fragments :: prefill}"></script>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

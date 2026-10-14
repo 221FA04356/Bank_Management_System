@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Mini statement')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:900px">
+<div th:replace="~{fragments :: flash}"></div>
+<div id="live">
+<h3 th:text="'🧾 ' + #{nav.mini}">Mini statement</h3>
+<div th:replace="~{fragments :: txns(${list})}"></div>
+<div class="fw-bold">Available balance: Rs. <span th:text="${#numbers.formatDecimal(me.balance,1,'COMMA',2,'POINT')}"></span></div>
+</div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

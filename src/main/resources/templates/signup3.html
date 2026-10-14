@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Sign up - Page 3')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:720px">
+<div th:replace="~{fragments :: flash}"></div>
+<h4>Page 3: Account details</h4><div class="progress mb-3"><div class="progress-bar" style="width:100%"></div></div>
+<form th:action="@{/signup/3}" method="post">
+  <label class="form-label d-block">Account type</label>
+  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="accountType" value="Savings" checked><label class="form-check-label">Savings</label></div>
+  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="accountType" value="Current"><label class="form-check-label">Current</label></div>
+  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="accountType" value="Fixed Deposit"><label class="form-check-label">Fixed Deposit</label></div>
+  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="accountType" value="Recurring Deposit"><label class="form-check-label">Recurring Deposit</label></div>
+  <label class="form-label d-block mt-3">Services required</label>
+  <div class="form-check"><input class="form-check-input" type="checkbox" name="services" value="ATM Card"><label class="form-check-label">ATM Card</label></div>
+  <div class="form-check"><input class="form-check-input" type="checkbox" name="services" value="Internet Banking"><label class="form-check-label">Internet Banking</label></div>
+  <div class="form-check"><input class="form-check-input" type="checkbox" name="services" value="Mobile Banking"><label class="form-check-label">Mobile Banking</label></div>
+  <div class="form-check"><input class="form-check-input" type="checkbox" name="services" value="Email Alerts"><label class="form-check-label">Email Alerts</label></div>
+  <div class="form-check"><input class="form-check-input" type="checkbox" name="services" value="Cheque Book"><label class="form-check-label">Cheque Book</label></div>
+  <div class="row g-3 mt-1">
+    <div class="col-md-6"><label class="form-label">Choose a 4-digit PIN</label><input class="form-control" type="password" name="pin" maxlength="4" inputmode="numeric" required></div>
+    <div class="col-md-6"><label class="form-label">Confirm PIN</label><input class="form-control" type="password" name="pin2" maxlength="4" inputmode="numeric" required></div>
+  </div>
+  <div class="d-flex gap-2 mt-3"><a class="btn btn-outline-secondary" th:href="@{/signup/2}">← Back</a><button class="btn btn-success">Create account</button></div>
+</form>
+<script th:replace="~{fragments :: prefill}"></script>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

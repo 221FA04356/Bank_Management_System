@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Fast Cash')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:640px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3 th:text="'⚡ ' + #{nav.fastcash}">Fast cash</h3>
+<form th:action="@{/withdraw}" method="post" class="row g-3">
+  <input type="hidden" name="from" value="fast">
+  <div class="col-6 col-md-4" th:each="a : ${ {100,500,1000,2000,5000,10000} }">
+    <button class="btn btn-outline-primary w-100 py-3 fs-5" name="amount" th:value="${a}" th:text="'Rs. ' + ${a}"></button>
+  </div>
+</form>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

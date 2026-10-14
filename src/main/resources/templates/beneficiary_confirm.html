@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Add beneficiary')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:560px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3>Add beneficiary</h3>
+<th:block th:replace="~{fragments :: countdown(${left})}"></th:block>
+<form th:action="@{/beneficiaries/confirm}" method="post" class="card card-body shadow-sm">
+  <label class="form-label">Account number (locked, cannot be changed)</label>
+  <input class="form-control mb-3" th:value="${d.to}" disabled readonly>
+  <label class="form-label">Account holder</label>
+  <input class="form-control mb-3" th:value="${d.name}" disabled readonly>
+  <label class="form-label">Nickname</label>
+  <input class="form-control mb-3" name="nickname" maxlength="40" required autofocus>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary" th:href="@{/beneficiaries}">← Back</a>
+    <button class="btn btn-primary">Save beneficiary</button>
+  </div>
+</form>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Money requests')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:960px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3>💸 Money requests</h3>
+<form th:action="@{/requests}" method="post" class="row g-2 mb-4">
+  <div class="col-md-4"><input class="form-control" name="to" placeholder="Request from (account number)" inputmode="numeric" required></div>
+  <div class="col-md-2"><input class="form-control" name="amount" type="number" step="0.01" min="1" placeholder="Amount" required></div>
+  <div class="col-md-4"><input class="form-control" name="note" maxlength="100" placeholder="Note (optional)"></div>
+  <div class="col-md-2"><button class="btn btn-primary w-100">Send request</button></div>
+</form>
+<div id="live">
+<h5>Requests to you</h5>
+<table class="table bg-white mb-4"><thead><tr><th>From</th><th>Amount</th><th>Note</th><th>Status</th><th></th></tr></thead><tbody>
+  <tr th:each="r : ${incoming}"><td th:text="${names[r.requesterId]}"></td><td th:text="${r.amount}"></td><td th:text="${r.note}"></td>
+    <td><span class="badge" th:classappend="${r.status == 'PAID'} ? 'text-bg-success' : (${r.status == 'PENDING'} ? 'text-bg-warning' : 'text-bg-secondary')" th:text="${r.status}"></span></td>
+    <td class="text-end" th:if="${r.status == 'PENDING'}">
+      <form class="d-inline" th:action="@{/requests/{id}/approve(id=${r.id})}" method="post"><button class="btn btn-sm btn-success">Approve and pay</button></form>
+      <form class="d-inline" th:action="@{/requests/{id}/decline(id=${r.id})}" method="post"><button class="btn btn-sm btn-outline-danger">Decline</button></form></td>
+    <td th:unless="${r.status == 'PENDING'}"></td></tr>
+  <tr th:if="${#lists.isEmpty(incoming)}"><td colspan="5" class="text-muted">No requests</td></tr>
+</tbody></table>
+<h5>Requests you sent</h5>
+<table class="table bg-white"><thead><tr><th>To</th><th>Amount</th><th>Note</th><th>Status</th><th></th></tr></thead><tbody>
+  <tr th:each="r : ${outgoing}"><td th:text="${names[r.payerId]}"></td><td th:text="${r.amount}"></td><td th:text="${r.note}"></td>
+    <td><span class="badge" th:classappend="${r.status == 'PAID'} ? 'text-bg-success' : (${r.status == 'PENDING'} ? 'text-bg-warning' : 'text-bg-secondary')" th:text="${r.status}"></span></td>
+    <td class="text-end" th:if="${r.status == 'PENDING'}"><form th:action="@{/requests/{id}/cancel(id=${r.id})}" method="post"><button class="btn btn-sm btn-outline-secondary">Cancel</button></form></td>
+    <td th:unless="${r.status == 'PENDING'}"></td></tr>
+  <tr th:if="${#lists.isEmpty(outgoing)}"><td colspan="5" class="text-muted">No requests</td></tr>
+</tbody></table>
+</div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

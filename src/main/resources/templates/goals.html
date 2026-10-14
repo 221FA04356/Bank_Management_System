@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Savings goals')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:860px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3 th:text="'🎯 ' + #{nav.goals}">Goals</h3>
+<form th:action="@{/goals}" method="post" class="row g-2 mb-4">
+  <div class="col-md-5"><input class="form-control" name="name" placeholder="Goal, e.g. Laptop" required></div>
+  <div class="col-md-4"><input class="form-control" name="target" type="number" step="0.01" min="1" placeholder="Target amount" required></div>
+  <div class="col-md-3"><button class="btn btn-primary w-100">Create goal</button></div>
+</form>
+<div class="card mb-3 shadow-sm" th:each="g : ${goals}"><div class="card-body">
+  <div class="d-flex justify-content-between"><h5 th:text="${g.name}"></h5>
+    <span th:text="'Rs. ' + ${g.saved} + ' / Rs. ' + ${g.target}"></span></div>
+  <div class="progress mb-3"><div class="progress-bar bg-success" th:style="'width:' + ${g.percent()} + '%'" th:text="${g.percent()} + '%'"></div></div>
+  <form th:action="@{/goals/{id}/move(id=${g.id})}" method="post" class="row g-2">
+    <div class="col-md-4"><input class="form-control" name="amount" type="number" step="0.01" min="1" placeholder="Amount" required></div>
+    <div class="col-auto"><button class="btn btn-success" name="dir" value="in">Add money</button></div>
+    <div class="col-auto"><button class="btn btn-outline-secondary" name="dir" value="out">Take back</button></div>
+  </form>
+  <form class="mt-2" th:action="@{/goals/{id}/delete(id=${g.id})}" method="post"><button class="btn btn-sm btn-link text-danger p-0" th:text="#{common.delete}">Delete</button></form>
+</div></div>
+<p class="text-muted" th:if="${#lists.isEmpty(goals)}">No goals yet. Create one above.</p>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Settings')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:900px">
+<div th:replace="~{fragments :: flash}"></div>
+<h3 th:text="'⚙️ ' + #{nav.settings}">Settings</h3>
+<div class="row g-3">
+  <div class="col-md-6"><div class="card card-body shadow-sm">
+    <h5>Change PIN</h5>
+    <form th:action="@{/pin}" method="post">
+      <input class="form-control mb-2" type="password" name="oldPin" placeholder="Current PIN" maxlength="6" inputmode="numeric" required>
+      <input class="form-control mb-2" type="password" name="newPin" placeholder="New 4-digit PIN" maxlength="4" inputmode="numeric" required>
+      <input class="form-control mb-2" type="password" name="newPin2" placeholder="Re-enter new PIN" maxlength="4" inputmode="numeric" required>
+      <button class="btn btn-primary w-100" th:text="#{common.save}">Save</button>
+    </form></div></div>
+  <div class="col-md-6"><div class="card card-body shadow-sm">
+    <h5>Daily withdrawal / transfer limit</h5>
+    <form th:action="@{/settings/limit}" method="post">
+      <input class="form-control mb-2" type="number" name="limit" step="0.01" min="100" max="500000" th:value="${me.dailyLimit}" required>
+      <button class="btn btn-primary w-100" th:text="#{common.save}">Save</button>
+    </form></div></div>
+  <div class="col-12"><div class="card card-body shadow-sm text-center">
+    <h5>Receive money</h5>
+    <p class="text-muted">Anyone can scan this QR to open the transfer page with your account number filled in.</p>
+    <img th:src="@{/qr.png}" alt="QR" width="220" height="220" class="mx-auto">
+    <div class="mt-2">Account: <b th:text="${me.accountNumber}"></b></div>
+  </div></div>
+</div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Account created')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:560px">
+<div th:replace="~{fragments :: flash}"></div>
+<div class="card shadow-sm"><div class="card-body p-4">
+<h4>🎉 Your account is ready</h4>
+<p>Card number: <b class="fs-5" th:text="${card}"></b></p>
+<p>Account number: <b class="fs-5" th:text="${acct}"></b></p>
+<p class="text-muted">Note these down. Use the card number and the PIN you chose to sign in. A copy was emailed to you (the PIN is never emailed).</p>
+<a class="btn btn-primary" th:href="@{/login}">Go to sign in</a></div></div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

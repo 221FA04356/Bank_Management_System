@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Sign in')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:460px">
+<div th:replace="~{fragments :: flash}"></div>
+<div class="card shadow-sm"><div class="card-body p-4">
+<div class="alert alert-warning" th:if="${param.expired}">Your session ended (20-minute limit). Please sign in again.</div>
+<h4 class="mb-3" th:text="#{login.title}">Sign in</h4>
+<form th:action="@{/login}" method="post">
+  <label class="form-label" th:text="#{login.card}">Card</label>
+  <input class="form-control mb-3" name="card" inputmode="numeric" maxlength="16" required autofocus>
+  <label class="form-label" th:text="#{login.pin}">PIN</label>
+  <input class="form-control mb-3" name="pin" type="password" inputmode="numeric" maxlength="6" required>
+  <button class="btn btn-primary w-100" th:text="#{login.button}">Sign in</button>
+</form>
+<hr><a th:href="@{/signup/1}" th:text="#{login.signup}">Sign up</a><br>
+<a th:href="@{/unlock}" th:text="#{login.unlock}">Unlock</a>
+</div></div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

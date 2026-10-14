@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Admin')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:1200px">
+<div th:replace="~{fragments :: flash}"></div>
+<div id="live">
+<h3>Admin dashboard</h3>
+<div class="row g-3 mb-3">
+  <div class="col-md-4"><div class="card card-body text-center"><div class="text-muted">Customers</div><div class="balance" th:text="${#lists.size(customers)}"></div></div></div>
+  <div class="col-md-4"><div class="card card-body text-center"><div class="text-muted">Total deposits held</div><div class="balance" th:text="'Rs. ' + ${#numbers.formatDecimal(total,1,'COMMA',2,'POINT')}"></div></div></div>
+  <div class="col-md-4"><div class="card card-body text-center"><div class="text-muted">Pending loans</div><div class="balance" th:text="${#lists.size(pending)}"></div></div></div>
+</div>
+<div class="d-flex gap-2 mb-4">
+  <form th:action="@{/admin/run-interest}" method="post"><button class="btn btn-outline-primary btn-sm">Run monthly interest now</button></form>
+  <form th:action="@{/admin/run-scheduled}" method="post"><button class="btn btn-outline-primary btn-sm">Run due scheduled transfers now</button></form>
+</div>
+
+<h5>Loan applications</h5>
+<table class="table table-sm bg-white mb-4"><thead><tr><th>#</th><th>Customer</th><th>Amount</th><th>Months</th><th>EMI</th><th></th></tr></thead><tbody>
+  <tr th:each="l : ${pending}"><td th:text="${l.id}"></td><td th:text="${names[l.ownerId]}"></td><td th:text="${l.principal}"></td><td th:text="${l.months}"></td><td th:text="${l.emi}"></td>
+    <td class="text-end">
+      <form class="d-inline" th:action="@{/admin/loans/{id}/approve(id=${l.id})}" method="post"><button class="btn btn-sm btn-success">Approve</button></form>
+      <form class="d-inline" th:action="@{/admin/loans/{id}/reject(id=${l.id})}" method="post"><button class="btn btn-sm btn-danger">Reject</button></form></td></tr>
+  <tr th:if="${#lists.isEmpty(pending)}"><td colspan="6" class="text-muted">No pending loans</td></tr>
+</tbody></table>
+
+<h5>Customers</h5>
+<div class="table-responsive"><table class="table table-sm bg-white mb-4"><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Card</th><th>Account</th><th>Type</th><th class="text-end">Balance</th><th>Status</th><th></th></tr></thead><tbody>
+  <tr th:each="c : ${customers}"><td th:text="${c.id}"></td><td th:text="${c.name}"></td><td th:text="${c.email}"></td><td th:text="${c.cardNumber}"></td><td th:text="${c.accountNumber}"></td><td th:text="${c.accountType}"></td>
+    <td class="text-end" th:text="${#numbers.formatDecimal(c.balance,1,'COMMA',2,'POINT')}"></td>
+    <td><span class="badge" th:classappend="${c.locked} ? 'text-bg-danger' : 'text-bg-success'" th:text="${c.locked} ? 'LOCKED' : 'ACTIVE'"></span></td>
+    <td class="text-end">
+      <form th:if="${c.locked}" th:action="@{/admin/unlock/{id}(id=${c.id})}" method="post"><button class="btn btn-sm btn-outline-success">Unlock</button></form>
+      <form th:unless="${c.locked}" th:action="@{/admin/lock/{id}(id=${c.id})}" method="post"><button class="btn btn-sm btn-outline-danger">Lock</button></form></td></tr>
+</tbody></table></div>
+
+<h5>Recent transactions</h5>
+<table class="table table-sm bg-white mb-4"><thead><tr><th>Time</th><th>Customer</th><th>Type</th><th>Details</th><th class="text-end">Amount</th></tr></thead><tbody>
+  <tr th:each="t : ${recent}"><td th:text="${#temporals.format(t.createdAt,'dd MMM HH:mm')}"></td><td th:text="${names[t.customerId]}"></td><td th:text="${t.type}"></td><td th:text="${t.note}"></td><td class="text-end" th:text="${t.amount}"></td></tr>
+</tbody></table>
+
+<h5>Audit log</h5>
+<table class="table table-sm bg-white"><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Detail</th></tr></thead><tbody>
+  <tr th:each="a : ${logs}" th:classappend="${a.action == 'FRAUD_ALERT'} ? 'table-warning'"><td th:text="${#temporals.format(a.createdAt,'dd MMM HH:mm')}"></td><td th:text="${a.actor}"></td><td th:text="${a.action}"></td><td th:text="${a.detail}"></td></tr>
+</tbody></table>
+</div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

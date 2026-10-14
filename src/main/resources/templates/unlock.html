@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Unlock card')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:460px">
+<div th:replace="~{fragments :: flash}"></div>
+<div class="card shadow-sm"><div class="card-body p-4">
+<h4>Unlock your card</h4>
+<form th:unless="${verify}" th:action="@{/unlock/send}" method="post">
+  <p class="text-muted">We will email a 6-digit OTP to your registered email address.</p>
+  <input class="form-control mb-3" name="card" placeholder="Card number" inputmode="numeric" required>
+  <button class="btn btn-primary w-100">Send OTP</button>
+</form>
+<form th:if="${verify}" th:action="@{/unlock/verify}" method="post">
+  <input class="form-control mb-3" name="code" placeholder="6-digit OTP" inputmode="numeric" maxlength="6" required autofocus>
+  <button class="btn btn-primary w-100">Verify and unlock</button>
+</form>
+<a class="d-block mt-3" th:href="@{/login}">Back to sign in</a>
+</div></div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>

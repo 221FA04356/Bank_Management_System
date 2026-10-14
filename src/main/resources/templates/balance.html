@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Balance')}"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<div class="container py-4" style="max-width:520px">
+<div th:replace="~{fragments :: flash}"></div>
+<div id="live"><div class="card card-body shadow-sm text-center">
+  <div class="text-muted" th:text="#{dash.balance}">Balance</div>
+  <div class="balance" th:text="'Rs. ' + ${#numbers.formatDecimal(me.balance,1,'COMMA',2,'POINT')}"></div>
+  <div class="text-muted">Account <span th:text="${me.accountNumber}"></span> &middot; <span th:text="${me.accountType}"></span></div>
+  <div class="text-muted small">Daily withdrawal limit: Rs. <span th:text="${me.dailyLimit}"></span></div>
+</div></div>
+</div>
+<div th:replace="~{fragments :: live}"></div>
+</body>
+</html>
